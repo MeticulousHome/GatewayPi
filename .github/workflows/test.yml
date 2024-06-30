@@ -1,0 +1,30 @@
+name: Test Code Quality
+
+on: 
+  push:
+  workflow_dispatch:
+
+jobs:
+  lint-and-format:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'  # Specify the Python version you need
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Run flake8
+      run: |
+        flake8 .
+
+    - name: Run black
+      run: |
+        black --check .

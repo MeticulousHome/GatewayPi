@@ -12,23 +12,30 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.12'  # Specify the Python version you need
 
+    - name: Install ubuntu dependencis
+      run: |
+        sudo apt update
+        sudo apt -y install libmtdev1
+
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip setuptools=69.5.1 wheel pyinstaller==5.13.0
-        pip install -r requirements
+        python -m pip install --upgrade pip setuptools==69.5.1 wheel pyinstaller==5.13.0
+        pip install -r requirements.txt
 
     - name: Build with PyInstaller
-      run: pyinstaller GatewayPi.spec
+      uses: coactions/setup-xvfb@v1
+      with:
+        run: pyinstaller --log-level INFO GatewayPi.spec
 
     - name: Archive Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
-        name: wifi-status-app
+        name: GatewayPi
         path: dist/
