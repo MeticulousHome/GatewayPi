@@ -1,3 +1,5 @@
 kivymd
 nmcli
 requests
+flake8
+black

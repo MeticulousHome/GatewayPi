@@ -1,21 +1,19 @@
+import time
 from functools import wraps
-from threading import Thread
-import time
-from queue import Empty, Queue
-import time
 from queue import Empty, Queue
 from threading import Thread
 
-from kivymd.app import MDApp
-from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.gridlayout import MDGridLayout
-from kivymd.uix.button import MDRaisedButton
-from kivymd.uix.label import MDLabel
 from kivy.metrics import dp
 from kivy.properties import StringProperty
+from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.uix.gridlayout import MDGridLayout
+from kivymd.uix.label import MDLabel
 
-
-from networking import is_wifi_connected, has_internet_connection,is_wireguard_connected
+from networking import (
+    has_internet_connection,
+    is_wifi_connected,
+    is_wireguard_connected,
+)
 
 
 class TestResultWidget(MDBoxLayout):
@@ -23,7 +21,9 @@ class TestResultWidget(MDBoxLayout):
     status_text = StringProperty("")
 
     def __init__(self, test_function, test_name, **kwargs):
-        super(TestResultWidget, self).__init__(**kwargs, result="Loading ↻", status_text="Loading")
+        super(TestResultWidget, self).__init__(
+            **kwargs, result="Loading ↻", status_text="Loading"
+        )
 
         self.test_func = test_function
         self.test_name = test_name
@@ -102,6 +102,7 @@ def get_all_tests():
 register_test(is_wifi_connected, "WIFI connection")
 register_test(has_internet_connection, "Internet Connection")
 register_test(is_wireguard_connected, "Wireguard Connection")
+
 
 # Function to run a test with timeout
 def run_test_with_timeout(test, timeout=10):

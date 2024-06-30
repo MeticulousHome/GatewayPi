@@ -2,7 +2,6 @@ from threading import Thread
 from kivymd.app import MDApp
 from tests import get_all_tests, run_all_tests
 from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.button import MDRaisedButton
 from kivy.metrics import dp
 
 

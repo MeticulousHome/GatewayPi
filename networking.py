@@ -36,13 +36,18 @@ def is_wireguard_connected():
     try:
         # Get the status of all connections
         connections = nmcli.connection()
-        wireguard_connections = list(filter(lambda a: a.conn_type == "wireguard", connections))
+        wireguard_connections = list(
+            filter(lambda a: a.conn_type == "wireguard", connections)
+        )
 
     except Exception as e:
         return False, f"An error occurred: {str(e)}"
 
     if len(wireguard_connections) > 0:
-        return True, f"Connected to wireguard: {list(map(lambda wg:wg.name, wireguard_connections))}"
+        return (
+            True,
+            f"Connected to wireguard: {list(map(lambda wg: wg.name, wireguard_connections))}",
+        )
     else:
         return False, "Not connected to wireguard"
 
