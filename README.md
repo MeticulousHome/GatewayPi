@@ -1,2 +1,2 @@
 # GatewayPi
-Tooling to update an existing Raspberry Pi Os Image for meticulous gateway purposes
+Small GUI app for the UI on the Meticulous Gateway Raspberry PIs
