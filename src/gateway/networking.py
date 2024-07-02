@@ -1,8 +1,11 @@
 import nmcli
 import requests
+import logging
 
 nmcli.disable_use_sudo()
 nmcli.set_lang("C.UTF-8")
+
+logging.getLogger("urllib3").setLevel(logging.INFO)
 
 
 def is_wifi_connected():

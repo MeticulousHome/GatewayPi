@@ -15,7 +15,9 @@ jobs:
         os: [ubuntu-latest]
         arch:
           - "x86_64"
-          - "aarch64"
+#          Cross compilation is not working yet :(
+#          - "aarch64"
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -49,4 +51,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: GatewayPi-${{ matrix.arch }}
-          path: dist/${{ matrix.arch }} 
+          path: dist/${{ matrix.arch }}

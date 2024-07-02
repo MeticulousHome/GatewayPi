@@ -2,6 +2,7 @@ import time
 from functools import wraps
 from queue import Empty, Queue
 from threading import Thread
+import logging
 
 from kivy.metrics import dp
 from kivy.properties import StringProperty
@@ -9,11 +10,13 @@ from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.gridlayout import MDGridLayout
 from kivymd.uix.label import MDLabel
 
-from networking import (
+from .networking import (
     has_internet_connection,
     is_wifi_connected,
     is_wireguard_connected,
 )
+
+# coloredlogs.install(level='INFO')
 
 
 class TestResultWidget(MDBoxLayout):
@@ -76,9 +79,10 @@ class Test:
         self.widget: TestResultWidget = None
 
     def get_widget(self):
-        self.widget = TestResultWidget(
-            test_function=self.test_function, test_name=self.test_name
-        )
+        if not self.widget:
+            self.widget = TestResultWidget(
+                test_function=self.test_function, test_name=self.test_name
+            )
         return self.widget
 
 
@@ -128,18 +132,23 @@ def run_test_with_timeout(test, timeout=10):
 # Function to run all tests every 10 seconds
 def run_all_tests():
     tests = get_all_tests()
-    print(f"Running all {len(tests)} Tests")
+    logging.info(f"Running all {len(tests)} Tests")
     while True:
         for test in tests:
             success, explanation = run_test_with_timeout(test)
             status = "SUCCESS" if success else "FAILURE"
 
             if success:
-                test.widget.status_text = explanation
-                test.widget.result = status
+                test.get_widget().status_text = explanation
+                test.get_widget().result = status
+                logging.info(
+                    f"Test '{test.test_function.__name__}': {status} - {explanation}"
+                )
             else:
-                test.widget.status_text = explanation
-                test.widget.result = status
+                test.get_widget().status_text = explanation
+                test.get_widget().result = status
+                logging.warning(
+                    f"Test '{test.test_function.__name__}': {status} - {explanation}"
+                )
 
-            print(f"Test '{test.test_function.__name__}': {status} - {explanation}")
         time.sleep(1)

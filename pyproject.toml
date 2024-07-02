@@ -1,0 +1,52 @@
+[project]
+name = "MeticulousGatewayPi"
+version = "0.1.0"
+description = "A simple python GUI and install script for an in-field raspberry pi wireguard deployment"
+readme = "README.md"
+authors = [
+    { name="Mimoja", email="mimoja@meticuloushome.com" }
+]
+license = { file="LICENSE" }
+dependencies = [
+    "kivy",
+    "kivymd",
+    "nmcli"
+]
+classifiers = [
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+]
+
+[project.scripts]
+meticulous-gateway-gui = "gateway.main:main"
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+
+[tool.flake8-black]
+# No specific configuration needed for flake8-black
+
+[tool.isort]
+profile = "black"
+
