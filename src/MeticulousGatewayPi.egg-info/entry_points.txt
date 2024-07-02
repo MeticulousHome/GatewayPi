@@ -1,2 +1,0 @@
-[console_scripts]
-meticulous-gateway-gui = gateway.main:main

@@ -14,9 +14,7 @@ Window.maximize()
 class GatewayApp(MDApp):
 
     def build(self):
-        self.layout = MDBoxLayout(
-            orientation="vertical", spacing=dp(20), padding=dp(20)
-        )
+        self.layout = MDBoxLayout(orientation="vertical", padding=dp(20))
         for test in get_all_tests():
             logging.info(f"Adding widget: {test}")
             self.layout.add_widget(test.get_widget())

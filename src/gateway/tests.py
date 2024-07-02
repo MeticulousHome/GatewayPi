@@ -16,7 +16,7 @@ from .networking import (
     is_wireguard_connected,
 )
 
-# coloredlogs.install(level='INFO')
+from .machine import is_serial_connected
 
 
 class TestResultWidget(MDBoxLayout):
@@ -52,9 +52,8 @@ class TestResultWidget(MDBoxLayout):
             text=self.result, font_name="NotoColorEmoji.ttf", theme_text_color="Hint"
         )
         self.box = MDGridLayout(rows=2)
-        self.box.add_widget(self.test_name_label)
-        self.box.add_widget(self.status_label)
-        self.add_widget(self.box)
+        self.add_widget(self.test_name_label)
+        self.add_widget(self.status_label)
         self.add_widget(self.result_label)
 
         self.bind(result=self.update_result)
@@ -106,6 +105,7 @@ def get_all_tests():
 register_test(is_wifi_connected, "WIFI connection")
 register_test(has_internet_connection, "Internet Connection")
 register_test(is_wireguard_connected, "Wireguard Connection")
+register_test(is_serial_connected, "Machine Connection")
 
 
 # Function to run a test with timeout

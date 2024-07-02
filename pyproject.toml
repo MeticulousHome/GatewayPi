@@ -10,7 +10,8 @@ license = { file="LICENSE" }
 dependencies = [
     "kivy",
     "kivymd",
-    "nmcli"
+    "nmcli",
+    "pyserial"
 ]
 classifiers = [
     "Intended Audience :: Developers",

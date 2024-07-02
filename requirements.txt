@@ -1,5 +1,7 @@
 kivymd
 nmcli
 requests
+pyserial
+
 flake8
 black

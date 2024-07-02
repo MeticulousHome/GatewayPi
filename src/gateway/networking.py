@@ -47,9 +47,10 @@ def is_wireguard_connected():
         return False, f"An error occurred: {str(e)}"
 
     if len(wireguard_connections) > 0:
+        conn_string="\n".join(list(map(lambda wg: wg.name, wireguard_connections)))
         return (
             True,
-            f"Connected to wireguard: {list(map(lambda wg: wg.name, wireguard_connections))}",
+            f"Connected to wireguard:\n{conn_string}"
         )
     else:
         return False, "Not connected to wireguard"
