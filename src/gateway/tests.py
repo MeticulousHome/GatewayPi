@@ -121,12 +121,12 @@ def run_test_with_timeout(test, timeout=10):
     thread.join(timeout)
 
     if thread.is_alive():
-        return False, f"Test '{test.__name__}' failed due to timeout."
+        return False, f"Test '{test.test_name}' failed due to timeout."
     try:
         result = result_queue.get_nowait()
         return result
     except Empty:
-        return False, f"Test '{test.__name__}' failed to produce a result."
+        return False, f"Test '{test.test_name}' failed to produce a result."
 
 
 # Function to run all tests every 10 seconds

@@ -32,7 +32,7 @@ def has_internet_connection(url="http://www.google.com/", timeout=5):
         else:
             return False, f"Received unexpected status code {response.status_code}."
     except requests.RequestException as e:
-        return False, f"No internet connection. Error: {str(e)}"
+        return False, f"No internet connection. Error: {type(e).__name__}"
 
 
 def is_wireguard_connected():
