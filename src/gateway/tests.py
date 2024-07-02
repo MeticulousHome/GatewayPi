@@ -139,14 +139,16 @@ def run_all_tests():
             status = "SUCCESS" if success else "FAILURE"
 
             if success:
-                test.get_widget().status_text = explanation
-                test.get_widget().result = status
+                if test.widget:
+                    test.get_widget().status_text = explanation
+                    test.get_widget().result = status
                 logging.info(
                     f"Test '{test.test_function.__name__}': {status} - {explanation}"
                 )
             else:
-                test.get_widget().status_text = explanation
-                test.get_widget().result = status
+                if test.widget:
+                    test.get_widget().status_text = explanation
+                    test.get_widget().result = status
                 logging.warning(
                     f"Test '{test.test_function.__name__}': {status} - {explanation}"
                 )
