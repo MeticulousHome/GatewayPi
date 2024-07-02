@@ -7,6 +7,8 @@ apt -qq install wireguard wireguard-tools -y
 address=
 server=
 
+pi_user=meticulous
+
 echo "Creating wireguard config"
 met_pubkey=
 priv_key=$(wg genkey | tee /etc/wireguard/privatekey)
@@ -37,7 +39,15 @@ echo "Building python GUI"
 python3 -m venv venv
 venv/bin/pip install -e . -qq
 
-echo "@lxterminal -e `pwd`/venv/bin/meticulous-gateway-gui" >> /etc/xdg/lxsession/LXDE-pi/autostart
+mkdir -p /home/${pi_user}/.confg/autostart
+
+cat << EOF > /home/${pi_user}/.config/autostart/gateway.desktop
+[Desktop Entry]
+Type=Application
+Name=GatewayGUI
+Exec=bash -lhc "`pwd`/venv/bin/meticulous-gateway-gui &> `pwd`/../meticulous-gateway-gui.log"
+
+EOF
 
 echo "Install completed"
 
