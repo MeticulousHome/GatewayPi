@@ -42,12 +42,16 @@ def is_wireguard_connected():
         wireguard_connections = list(
             filter(lambda a: a.conn_type == "wireguard", connections)
         )
+        cons = []
+        for con in wireguard_connections:
+            ip = nmcli.connection.show(con.name).get("IP4.ADDRESS[1]")
+            cons.append(f"{con.name}: {ip}")
 
     except Exception as e:
         return False, f"An error occurred: {str(e)}"
 
     if len(wireguard_connections) > 0:
-        conn_string="\n".join(list(map(lambda wg: wg.name, wireguard_connections)))
+        conn_string="\n".join(cons)
         return (
             True,
             f"Connected to wireguard:\n{conn_string}"
