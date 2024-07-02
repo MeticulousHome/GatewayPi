@@ -4,11 +4,11 @@ from kivymd import hooks_path as kivymd_hooks_path
 path = os.path.abspath(".")
 
 a = Analysis(
-    ['gateway.py'],
+    ['src/gateway/main.py'],
     pathex=[path],
     binaries=[],
     datas=[
-        ('*.py', '.'), 
+        ('src/gateway/*.py', '.'), 
     ],
     hookspath=[kivymd_hooks_path],
     hooksconfig={},
