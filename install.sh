@@ -1,16 +1,27 @@
 #!/bin/bash
 
+if [[ $EUID -ne 0 ]]; then
+  echo "This script must be run as root" 1>&2
+  exit 1
+fi
+
+# Read and validate input parameters
+if [[ $# -lt 3 ]]; then
+  echo "Usage: $0 <IP_ADDRESS> <SERVER> <SERVER_PUBKEY>"
+  exit 1
+fi
+
 echo "Installing dependencies"
 apt -qq update
-apt -qq install wireguard wireguard-tools -y
+apt -qq install wireguard wireguard-tools fonts-noto-color-emoji -y
 
-address=
-server=
+address=$1
+server=$2
 
 pi_user=meticulous
 
 echo "Creating wireguard config"
-met_pubkey=
+met_pubkey=$3
 priv_key=$(wg genkey | tee /etc/wireguard/privatekey)
 pub_key=$(echo $priv_key | wg pubkey | tee /etc/wireguard/publickey)
 ps_key=$(wg genpsk | tee /tmp/preshared)
@@ -39,7 +50,7 @@ echo "Building python GUI"
 python3 -m venv venv
 venv/bin/pip install -e . -qq
 
-mkdir -p /home/${pi_user}/.confg/autostart
+mkdir -p /home/${pi_user}/.config/autostart
 
 cat << EOF > /home/${pi_user}/.config/autostart/gateway.desktop
 [Desktop Entry]
